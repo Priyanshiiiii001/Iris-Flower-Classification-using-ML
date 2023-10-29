@@ -1,0 +1,48 @@
+#importing libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+import warnings
+warnings.filterwarnings('ignore')
+data=pd.read_csv('iris.csv')
+data.head()
+data.shape
+data.describe()
+data.info
+data.isnull().sum()
+data.Species.value_counts
+X= data[['Id','SepalLengthCm','SepalWidthCm','PetalLengthCm','PetalWidthCm']]
+y= data['Species']
+x
+y
+# Split the dataset into training and testing sets
+
+from sklearn.model_selection import train_test_split
+X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.20,random_state=42)
+# Training the Linear Regression Model
+
+from sklearn.linear_model import LogisticRegression
+# Let's create an instance for the LogisticRegression model
+lr = LogisticRegression()
+
+# Train the model on our train dataset
+lr.fit(X,y)
+
+# Train the model with the training set
+
+lr.fit(X_train,y_train)
+# Getting the predictions from the model for the given examples.
+predictions = lr.predict(X)
+# Compare with the actual charges
+
+Scores = pd.DataFrame({'Actual':y,'Predictions':predictions})
+Scores.head()
+y_test_hat=lr.predict(X_test)
+from sklearn.metrics import accuracy_score
+print(accuracy_score(y_test,y_test_hat)*100,'%')
+# Example prediction for a new flower
+new_flower = [[1,6, 2, 5, 2]]  # Example features: Id, sepal length, sepal width, petal length, petal width
+
+predicted_variety = lr.predict(new_flower)
+print("Predicted Variety:", predicted_variety)
